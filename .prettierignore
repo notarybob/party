@@ -1,0 +1,8 @@
+**/*.html
+**/*.txt
+**/*.svg
+**/*.ttf
+**/*.woff
+**/*.eot
+package.json
+node_modules

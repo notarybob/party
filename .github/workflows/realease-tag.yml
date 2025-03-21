@@ -1,0 +1,34 @@
+name: Create Release Tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release-tag:
+    if: github.repository == 'jdf2e/nutui-react'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Generate Changlog
+        run: pnpm changelog
+
+      - name: Create Release Tag
+        id: release_tag
+        uses: ncipollo/release-action@v1
+        with:
+          bodyFile: '.github/changelog.md'

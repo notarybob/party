@@ -1,0 +1,70 @@
+.nut-cell-group {
+  display: block;
+
+  &-title {
+    display: inherit;
+    padding: $cell-group-title-padding;
+    color: $cell-group-title-color;
+    font-size: $cell-group-title-font-size;
+    line-height: $cell-group-title-line-height;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  &-description {
+    display: inherit;
+    padding: $cell-group-description-padding;
+    color: $cell-group-description-color;
+    font-size: $cell-group-description-font-size;
+    line-height: $cell-group-description-line-height;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  &-wrap {
+    display: inherit;
+    border-radius: $cell-border-radius;
+    overflow: hidden;
+    background-color: $cell-group-background-color;
+    margin: $cell-group-wrap-margin;
+
+    .nut-cell {
+      margin: 0;
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+
+  &-wrap-divider {
+    .nut-cell {
+      &-divider {
+        position: absolute;
+        box-sizing: border-box;
+        pointer-events: none;
+        right: $cell-divider-right;
+        bottom: 0;
+        left: $cell-divider-left;
+        transform: scaleY(0.5);
+        border-top: $cell-divider-border-bottom;
+      }
+
+      &:last-child {
+        .nut-cell-divider {
+          border-top: 0;
+        }
+      }
+    }
+  }
+}
+
+[dir='rtl'] .nut-cell-group,
+.nut-rtl .nut-cell-group {
+  &-wrap-divider {
+    .nut-cell {
+      &-divider {
+        left: $cell-divider-right;
+        right: $cell-divider-left;
+      }
+    }
+  }
+}

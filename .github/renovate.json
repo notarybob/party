@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base", "schedule:weekly", "group:allNonMajor"
+  ],
+  "baseBranches": ["feat_v3.x"],
+  "rangeStrategy": "bump",
+  "labels": ["dependencies"],
+  "ignorePaths": [
+    "src/**",
+    "packages/nutui-templates/**"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^@tarojs", "^@react-spring", "^@use-gesture"],
+      "enabled": false
+    }
+  ],
+  "ignoreDeps": [
+    "node",
+    "typescript",
+    "eslint-config-taro",
+    "babel-preset-taro"
+  ]
+}
