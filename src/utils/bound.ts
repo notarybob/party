@@ -3,7 +3,7 @@ export function bound(
   min: number | undefined,
   max: number | undefined
 ): number {
-  let ret = position
+  const ret = position
   if (min !== undefined) {
     ret = Math.max(position, min)
   }
