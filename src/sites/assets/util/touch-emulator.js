@@ -4,8 +4,8 @@
  * Source：https://github.com/hammerjs/touchemulator
  */
 
-var eventTarget
-var supportTouch = 'ontouchstart' in window
+const eventTarget
+const supportTouch = 'ontouchstart' in window
 
 // polyfills
 if (!document.createTouch) {
@@ -38,8 +38,8 @@ if (!document.createTouch) {
 
 if (!document.createTouchList) {
   document.createTouchList = function () {
-    var touchList = TouchList()
-    for (var i = 0; i < arguments.length; i++) {
+    const touchList = TouchList()
+    for (const i = 0; i < arguments.length; i++) {
       touchList[i] = arguments[i]
     }
     touchList.length = arguments.length
@@ -58,7 +58,7 @@ if (!document.createTouchList) {
  * @returns {Object} touchPoint
  */
 
-var Touch = function Touch(target, identifier, pos, deltaX, deltaY) {
+const Touch = function Touch(target, identifier, pos, deltaX, deltaY) {
   deltaX = deltaX || 0
   deltaY = deltaY || 0
 
@@ -78,7 +78,7 @@ var Touch = function Touch(target, identifier, pos, deltaX, deltaY) {
  * @returns touchList
  */
 function TouchList() {
-  var touchList = []
+  const touchList = []
 
   touchList['item'] = function (index) {
     return this[index] || null
@@ -98,7 +98,7 @@ function TouchList() {
  * @returns {Function}
  */
 
-var initiated = false
+const initiated = false
 function onMouse(touchType) {
   return function (ev) {
     // prevent mouse events
@@ -141,7 +141,7 @@ function onMouse(touchType) {
  * @param mouseEv
  */
 function triggerTouch(eventName, mouseEv) {
-  var touchEvent = document.createEvent('Event')
+  const touchEvent = document.createEvent('Event')
   touchEvent.initEvent(eventName, true, false)
 
   touchEvent.altKey = mouseEv.altKey
@@ -162,7 +162,7 @@ function triggerTouch(eventName, mouseEv) {
  * @returns {TouchList}
  */
 function createTouchList(mouseEv) {
-  var touchList = TouchList()
+  const touchList = TouchList()
   touchList.push(new Touch(eventTarget, 1, mouseEv, 0, 0))
   return touchList
 }
