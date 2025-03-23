@@ -24,7 +24,7 @@ export function recursive(...items: any[]) {
 
 export function clone<T>(input: T): T {
   if (Array.isArray(input)) {
-    const output = []
+    var output = []
 
     for (let index = 0; index < input.length; ++index)
       output.push(clone(input[index]))
@@ -32,10 +32,10 @@ export function clone<T>(input: T): T {
     return output as any
   }
   if (isPlainObject(input)) {
-    const output: any = {}
+    var output: any = {}
 
     // eslint-disable-next-line guard-for-in
-    for (const index in input) output[index] = clone((input as any)[index])
+    for (var index in input) output[index] = clone((input as any)[index])
 
     return output as any
   }
@@ -52,7 +52,7 @@ export function isPlainObject(input: unknown): input is NonNullable<any> {
 
 function _recursiveMerge(base: any, extend: any) {
   if (!isPlainObject(base) || !isPlainObject(extend)) return extend
-  for (const key in extend) {
+  for (var key in extend) {
     if (key === '__proto__' || key === 'constructor' || key === 'prototype')
       // eslint-disable-next-line no-continue
       continue
@@ -71,16 +71,16 @@ function _merge(isClone: boolean, isRecursive: boolean, items: any[]) {
   if (isClone || !isPlainObject((result = items.shift()))) result = {}
 
   for (let index = 0; index < items.length; ++index) {
-    const item = items[index]
+    var item = items[index]
 
     // eslint-disable-next-line no-continue
     if (!isPlainObject(item)) continue
 
-    for (const key in item) {
+    for (var key in item) {
       if (key === '__proto__' || key === 'constructor' || key === 'prototype')
         // eslint-disable-next-line no-continue
         continue
-      const value = isClone ? clone(item[key]) : item[key]
+      var value = isClone ? clone(item[key]) : item[key]
       result[key] = isRecursive ? _recursiveMerge(result[key], value) : value
     }
   }
