@@ -9,7 +9,7 @@ import {
   Store,
 } from './types'
 
-export const SECRET = 'NUT_FORM_INTERNAL'
+export var SECRET = 'NUT_FORM_INTERNAL'
 type UpdateItem = { entity: FormFieldEntity; condition: any }
 type WatchCallback = (value: Store, namePath: NamePath[]) => void
 
@@ -67,7 +67,7 @@ class FormStore {
     if (typeof nameList === 'boolean') {
       return JSON.parse(JSON.stringify(this.store))
     }
-    const fieldsValue: { [key: NamePath]: any } = {}
+    var fieldsValue: { [key: NamePath]: any } = {}
     nameList.forEach((field) => {
       fieldsValue[field] = this.getFieldValue(field)
     })
@@ -87,7 +87,7 @@ class FormStore {
   setInitialValues = (initialValues: Store, init: boolean) => {
     this.initialValues = initialValues || {}
     if (init) {
-      const nextStore = merge(initialValues, this.store)
+      var nextStore = merge(initialValues, this.store)
       this.updateStore(nextStore)
       this.notifyWatch()
     }
@@ -98,10 +98,10 @@ class FormStore {
    * @param newStore { [name]: newValue }
    */
   setFieldsValue = (newStore: any) => {
-    const nextStore = recursive(true, this.store, newStore)
+    var nextStore = recursive(true, this.store, newStore)
     this.updateStore(nextStore)
     this.fieldEntities.forEach((entity: FormFieldEntity) => {
-      const { name } = entity.props
+      var { name } = entity.props
       Object.keys(newStore).forEach((key) => {
         if (key === name) {
           entity.onStoreChange('update')
@@ -121,7 +121,7 @@ class FormStore {
   }
 
   setFieldValue = <T>(name: NamePath, value: T) => {
-    const store = {
+    var store = {
       [name]: value,
     }
     this.setFieldsValue(store)
@@ -136,14 +136,14 @@ class FormStore {
   }
 
   validateEntities = async (entity: FormFieldEntity, errs: any[]) => {
-    const { name, rules = [] } = entity.props
+    var { name, rules = [] } = entity.props
 
     if (!name) {
       console.warn('Form field missing name property')
       return
     }
 
-    const descriptor: any = {}
+    var descriptor: any = {}
     if (rules.length) {
       // 多条校验规则
       if (rules.length > 1) {
@@ -155,7 +155,7 @@ class FormStore {
         descriptor[name] = rules[0]
       }
     }
-    const validator = new Schema(descriptor)
+    var validator = new Schema(descriptor)
     // 此处合并无值message 没有意义？
     // validator.messages()
     try {
@@ -184,7 +184,7 @@ class FormStore {
         nameList.includes(name)
       )
     }
-    const errs: any[] = []
+    var errs: any[] = []
     await Promise.all(
       filterEntities.map(async (entity) => {
         await this.validateEntities(entity, errs)
@@ -194,7 +194,7 @@ class FormStore {
   }
 
   submit = async () => {
-    const errors = await this.validateFields()
+    var errors = await this.validateFields()
     if (errors.length === 0) {
       this.callbacks.onFinish?.(this.store)
     } else if (errors.length > 0) {
@@ -207,7 +207,7 @@ class FormStore {
       namePaths.forEach((path) => {
         this.errors[path] = null
         this.fieldEntities.forEach((entity: FormFieldEntity) => {
-          const name = entity.props.name
+          var name = entity.props.name
           if (name === path) {
             if (path in this.initialValues) {
               this.updateStore({ [path]: this.initialValues[path] })
@@ -219,7 +219,7 @@ class FormStore {
         })
       })
     } else {
-      const nextStore = merge({}, this.initialValues)
+      var nextStore = merge({}, this.initialValues)
       this.updateStore(nextStore)
       this.fieldEntities.forEach((entity: FormFieldEntity) => {
         entity.onStoreChange('reset')
@@ -296,30 +296,30 @@ class FormStore {
   }
 }
 
-export const useForm = (form?: FormInstance): [FormInstance] => {
-  const formRef = useRef<FormInstance>()
+export var useForm = (form?: FormInstance): [FormInstance] => {
+  var formRef = useRef<FormInstance>()
   if (!formRef.current) {
     if (form) {
       formRef.current = form
     } else {
-      const formStore = new FormStore()
+      var formStore = new FormStore()
       formRef.current = formStore.getForm() as FormInstance
     }
   }
   return [formRef.current as FormInstance]
 }
 
-export const useWatch = (path: NamePath, form: FormInstance) => {
-  const formInstance = form.getInternal(SECRET)
-  const [value, setValue] = useState<any>()
+export var useWatch = (path: NamePath, form: FormInstance) => {
+  var formInstance = form.getInternal(SECRET)
+  var [value, setValue] = useState<any>()
   useEffect(() => {
-    const unsubscribe = formInstance.registerWatch(
+    var unsubscribe = formInstance.registerWatch(
       (data: any, namePath: NamePath) => {
-        const value = data[path]
+        var value = data[path]
         setValue(value)
       }
     )
-    const initialValue = form.getFieldsValue(true)
+    var initialValue = form.getFieldsValue(true)
     if (value !== initialValue[path]) {
       setValue(initialValue[path])
     }
