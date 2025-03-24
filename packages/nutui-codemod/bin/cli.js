@@ -1,18 +1,18 @@
-const os = require('os')
-const path = require('path')
-const fs = require('fs')
-const chalk = require('chalk')
-const isGitClean = require('is-git-clean')
-const { run: jscodeshift } = require('jscodeshift/src/Runner')
-const pkgInfo = require('./config')
+var os = require('os')
+var path = require('path')
+var fs = require('fs')
+var chalk = require('chalk')
+var isGitClean = require('is-git-clean')
+var { run: jscodeshift } = require('jscodeshift/src/Runner')
+var pkgInfo = require('./config')
 
-const transformers = [
+var transformers = [
   'component-name-migration',
   'icon-migration',
   'props-changed-migration',
 ]
-const transformersDir = path.join(__dirname, '../transforms')
-const ignoreConfig = path.join(__dirname, './codemod.ignore')
+var transformersDir = path.join(__dirname, '../transforms')
+var ignoreConfig = path.join(__dirname, './codemod.ignore')
 
 function checkGitStatus() {
   let clean = false
@@ -45,7 +45,7 @@ function getRunnerArgs(
   parser = 'babylon', // use babylon as default parser
   options = {}
 ) {
-  const args = {
+  var args = {
     verbose: 2,
     // limit usage for cpus
     cpus: getMaxWorkers(options),
@@ -67,16 +67,16 @@ function getRunnerArgs(
 }
 
 async function runTransform({ dir }) {
-  for (const transformer of transformers) {
-    const transformPath = path.join(transformersDir, `${transformer}.js`)
-    const options = getRunnerArgs(transformPath)
-    const res = await jscodeshift(transformPath, [dir], options)
+  for (var transformer of transformers) {
+    var transformPath = path.join(transformersDir, `${transformer}.js`)
+    var options = getRunnerArgs(transformPath)
+    var res = await jscodeshift(transformPath, [dir], options)
     console.log(res)
   }
 }
 
 function run() {
-  const dir = process.argv[2]
+  var dir = process.argv[2]
   checkGitStatus()
 
   if (!dir || !fs.existsSync(dir)) {
