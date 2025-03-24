@@ -1,7 +1,7 @@
 import { getMonthPreDay, getMonthDays } from '@/utils/date'
 import { CalendarCardDay } from './types'
 
-export const convertDateToDay = (date: Date) => {
+export var convertDateToDay = (date: Date) => {
   return date
     ? {
         year: date.getFullYear(),
@@ -11,14 +11,14 @@ export const convertDateToDay = (date: Date) => {
     : null
 }
 
-export const convertDayToDate = (day: CalendarCardDay) => {
+export var convertDayToDate = (day: CalendarCardDay) => {
   return day ? new Date(day.year, day.month - 1, day.date) : null
 }
 
 /**
  * 获取当月面板中前一个月的日期数据
  */
-export const getPrevMonthDays = (
+export var getPrevMonthDays = (
   year: number,
   month: number,
   firstDayOfWeek: number
@@ -35,8 +35,8 @@ export const getPrevMonthDays = (
     days -= 7
   }
 
-  const preDates = getMonthDays(`${prevYear}`, `${prevMonth}`)
-  const months = Array.from(Array(preDates), (_, k) => {
+  var preDates = getMonthDays(`${prevYear}`, `${prevMonth}`)
+  var months = Array.from(Array(preDates), (_, k) => {
     return {
       type: 'prev',
       year: prevYear,
@@ -50,8 +50,8 @@ export const getPrevMonthDays = (
 /**
  * 获取当前月的日期数据
  */
-export const getCurrentMonthDays = (year: number, month: number) => {
-  const days = getMonthDays(`${year}`, `${month}`)
+export var getCurrentMonthDays = (year: number, month: number) => {
+  var days = getMonthDays(`${year}`, `${month}`)
   return Array.from(Array(days), (_, k) => {
     return {
       type: 'current',
@@ -65,12 +65,12 @@ export const getCurrentMonthDays = (year: number, month: number) => {
 /**
  * 根据日期获取当前周的起始日期
  */
-export const getCurrentWeekDays = (
+export var getCurrentWeekDays = (
   day: CalendarCardDay,
   firstDayOfWeek: number
 ): CalendarCardDay[] => {
-  const current = new Date(day.year, day.month - 1, day.date)
-  const count = (current.getDay() + 7 - firstDayOfWeek) % 7
+  var current = new Date(day.year, day.month - 1, day.date)
+  var count = (current.getDay() + 7 - firstDayOfWeek) % 7
   return [
     convertDateToDay(
       new Date(current.getTime() - 24 * 60 * 60 * 1000 * count)
