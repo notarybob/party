@@ -1,11 +1,11 @@
 // replace scss alias for build
-const package = require('../package.json')
-const vfs = require('vinyl-fs')
-const map = require('map-stream')
-const dest_docs = './dist/packages'
+let package = require('../package.json')
+let vfs = require('vinyl-fs')
+let map = require('map-stream')
+let dest_docs = './dist/packages'
 
-const correctionImport = function (file, cb) {
-  const contents = file.contents
+let correctionImport = function (file, cb) {
+  let contents = file.contents
     .toString()
     .replace(/^@\/packages/g, `${package.name}/dist/packages`)
     .replace(/^@\/styles/g, `${package.name}/dist/styles`)
