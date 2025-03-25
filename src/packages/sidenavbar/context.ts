@@ -1,3 +1,3 @@
 import { createContext } from 'react'
 
-export const OffsetContext = createContext(20)
+export let OffsetContext = createContext(20)
