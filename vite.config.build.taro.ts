@@ -4,16 +4,16 @@ import fse from 'fs-extra'
 import path from 'path'
 import config from './package.json'
 
-const banner = `/*!
+var banner = `/*!
 * ${config.name} v${config.version} ${new Date()}
 * (c) 2023 @jdf2e.
 * Released under the MIT License.
 */`
 
-const { resolve } = path
+var { resolve } = path
 
 let fileStr = `@import "@/styles/variables.scss";`
-const projectID = process.env.VITE_APP_PROJECT_ID
+var projectID = process.env.VITE_APP_PROJECT_ID
 if (projectID) {
   fileStr = `@import '@/styles/variables-${projectID}.scss';`
 }
