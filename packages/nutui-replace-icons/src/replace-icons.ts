@@ -1,8 +1,8 @@
 import { IOptions } from './type'
 
 function replace(options: IOptions) {
-  let sourceLibrary = options.sourceLibrary || []
-  let targetLibrary = options.targetLibrary
+  const sourceLibrary = options.sourceLibrary || []
+  const targetLibrary = options.targetLibrary
   return {
     visitor: {
       ImportDeclaration(path) {
@@ -12,14 +12,14 @@ function replace(options: IOptions) {
           path.node.source.value = targetLibrary
           path.node.specifiers.forEach((specifier) => {
             // 根据 iconMappings 进行替换
-            let iconMappings = options.iconMappings
+            const iconMappings = options.iconMappings
             if (iconMappings && iconMappings[specifier.imported.name]) {
               specifier.imported.name = iconMappings[specifier.imported.name]
             }
           })
         } else {
           sourceLibrary.forEach((library) => {
-            let libraryPattern = new RegExp(`^${library}(?:/|$)`)
+            const libraryPattern = new RegExp(`^${library}(?:/|$)`)
             if (libraryPattern.test(path.node.source.value)) {
               // import '@nutui/icons-react-taro/dist/style_iconfont.css'
               path.node.source.value = path.node.source.value.replace(
