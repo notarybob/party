@@ -2,23 +2,23 @@ import babel from '@babel/core'
 import { describe, expect, it } from 'vitest'
 import { replaceIcons } from '../src/replace-icons'
 
-const plugin = replaceIcons({
+let plugin = replaceIcons({
   sourceLibrary: ['@nutui/icons-react', '@nutui/icons-react-taro'],
   targetLibrary: '@test/aa',
 })
 
-const babelOptions = {
+let babelOptions = {
   presets: ['@babel/preset-react'],
   plugins: [plugin],
 }
-const caseIns = `
+let caseIns = `
 import '@nutui/icons-react/dist/test.css'
 import '@nutui/icons-react-taro/dist/test.css'
 import '@nutui/taro/dist/test.css'
 `
 describe('', () => {
   it('replace Loading icons with Star', () => {
-    const ast = babel.transformSync(caseIns, babelOptions)
+    let ast = babel.transformSync(caseIns, babelOptions)
     // @ts-ignore
     expect(ast.code).toMatchSnapshot()
   })
