@@ -1,8 +1,8 @@
 /*
  * 用于在 prepublish 之后，恢复 package.json
  * */
-const path = require('path')
-const fsExtra = require('fs-extra')
+let path = require('path')
+let fsExtra = require('fs-extra')
 
 fsExtra.copySync(
   path.join(process.cwd(), '.cache/package.json.bk'),
